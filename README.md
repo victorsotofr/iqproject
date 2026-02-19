@@ -1,36 +1,67 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# iqproject
 
-## Getting Started
+Projet Next.js (App Router) initialisé avec create-next-app.
 
-First, run the development server:
+## Démarrage rapide
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Puis ouvre http://localhost:3000.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Debug frontend (écran blanc, styles cassés, rendu inattendu)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Si l'UI ne s'affiche pas correctement, suis cet ordre :
 
-## Learn More
+1. **Vérifier la branche et la synchro Git**
 
-To learn more about Next.js, take a look at the following resources:
+   ```bash
+   git branch --show-current
+   git pull
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+   > Si `npm run doctor` est "Missing script", tu n'es probablement pas sur la branche qui contient les derniers changements.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+2. **Vérifier les prérequis**
+   - Node.js 20+ recommandé (`node -v`)
+   - Dépendances installées (`npm install`)
 
-## Deploy on Vercel
+3. **Lancer le diagnostic local**
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+   ```bash
+   npm run doctor
+   ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+   Le script vérifie les points fréquents : version Node, présence du script doctor, déclaration Next, Tailwind, packages installés, etc.
+
+4. **Nettoyer le cache et relancer**
+
+   ```bash
+   rm -rf .next node_modules
+   npm install
+   npm run dev
+   ```
+
+5. **Valider que le serveur répond**
+
+   ```bash
+   curl -I http://localhost:3000
+   ```
+
+   Un statut `200` confirme que Next sert bien la page.
+
+6. **Si le serveur répond mais le rendu est “bizarre”**
+   - Ouvre les DevTools navigateur (Console + Network).
+   - Vérifie qu'aucune extension navigateur ne bloque les assets.
+   - Force un hard refresh (`Cmd+Shift+R` / `Ctrl+F5`).
+   - Teste en navigation privée.
+
+## Scripts
+
+- `npm run dev` : mode développement
+- `npm run build` : build production
+- `npm run start` : serveur après build
+- `npm run lint` : lint ESLint
+- `npm run doctor` : checks de diagnostic frontend
